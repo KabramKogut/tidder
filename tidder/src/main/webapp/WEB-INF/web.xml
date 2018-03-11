@@ -11,6 +11,29 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
+    <!-- EntityManager filter -->
+	<filter>
+    	<filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+    	<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+  	</filter>
+  	
+  	<filter-mapping>
+    	<filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+	
+	<!-- JPA Hibernate listener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- JPA and Hibernate xml and Spring Security xml location  -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/jpaContext.xml</param-value>
+	</context-param>
+    
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/webapi/*</url-pattern>
