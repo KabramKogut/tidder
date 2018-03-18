@@ -3,18 +3,23 @@
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:context="http://www.springframework.org/schema/context" 
 	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 		http://www.springframework.org/schema/data/jpa
     	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd  
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		
+	<mvc:annotation-driven />	
 
 	<context:annotation-config />
-	<context:component-scan base-package="tidder"/>
+	<context:component-scan base-package="com.tidder"/>
 	
 	<jpa:repositories base-package="com.tidder.repository"/> 
 	
@@ -46,9 +51,8 @@
 			
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:sqlserver://morfeusz.wszib.edu.pl:1433;databaseName=z_35021"/>
-		<property name="username" value="z_35021"/>
-		<property name="password" value="cxpnrVpP"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/tidder_db?autoReconnect=true"/>
+		<property name="username" value="root"/>
 	</bean>		
 
 </beans>

@@ -3,8 +3,11 @@ package com.tidder.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.tidder.model.Activity;
 
+@Repository("activityRepository")
 public class ActivityRepositoryStub implements ActivityRepository {
 	
 	@Override
