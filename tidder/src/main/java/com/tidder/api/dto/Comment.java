@@ -1,32 +1,21 @@
-package com.tidder.model;
+package com.tidder.api.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Comment {
-
+public class Comment implements Serializable {
+	 
+	private static final long serialVersionUID = 7507792952220988528L;
 	private int id;
-	private int userId;
-	private int postId;
 	private String text;
 	private Date date;
+	private User user;
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public int getPostId() {
-		return postId;
-	}
-	public void setPostId(int postId) {
-		this.postId = postId;
 	}
 	public String getText() {
 		return text;
@@ -40,4 +29,11 @@ public class Comment {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

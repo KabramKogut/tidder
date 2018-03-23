@@ -1,7 +1,9 @@
 package com.tidder.model;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -17,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @XmlRootElement
 @Table(name="posts")
-public class Post {
+public class PostEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,14 +34,27 @@ public class Post {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="userId")
-	private User user;
+	private UserEntity user;
+	
+	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private List<CommentEntity> comments;
 	
 	@Override
 	public String toString() {
+		StringBuffer commentsString = new StringBuffer();
+		for (CommentEntity comment : comments) {
+			commentsString.append("  ||  "+comment.getText());
+		}
 		return "Id: " + id + ", topic: " + topic + ", text: " + 
-				text + ", date: " + date.toString() + ", user: " + user.toString();
+				text + ", date: " + date.toString() + ", user: " + 
+				user.toString() + ", "+ commentsString.toString();
 	}
-	
+	public List<CommentEntity> getComments() {
+		return comments;
+	}
+	public void setComments(List<CommentEntity> comments) {
+		this.comments = comments;
+	}
 	public int getId() {
 		return id;
 	}
@@ -64,10 +80,10 @@ public class Post {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 	
