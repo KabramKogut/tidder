@@ -13,10 +13,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 @Entity
 @XmlRootElement
 @Table(name="users")
-public class User {
+public class UserEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,8 +32,23 @@ public class User {
 	private String password;
 	
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
-	private List<Post> posts;
+	private List<PostEntity> posts;
 	
+	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
+	private List<CommentEntity> comments;
+	
+	public List<PostEntity> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<PostEntity> posts) {
+		this.posts = posts;
+	}
+	public List<CommentEntity> getComments() {
+		return comments;
+	}
+	public void setComments(List<CommentEntity> comments) {
+		this.comments = comments;
+	}
 	public int getId() {
 		return id;
 	}
