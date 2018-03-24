@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @XmlRootElement
-@Table(name="users")
+@Table(name="Users")
 public class UserEntity {
 	
 	@Id

@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @XmlRootElement
-@Table(name="comments")
+@Table(name="Comments")
 public class CommentEntity {
 
 	@Id
@@ -28,11 +28,11 @@ public class CommentEntity {
 	private Date date;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="userId")
+	@JoinColumn(name="UserId")
 	private UserEntity user;
 	
 	@ManyToOne
-	@JoinColumn(name="postId")
+	@JoinColumn(name="PostId")
 	private PostEntity post;
 	
 	public UserEntity getUser() {

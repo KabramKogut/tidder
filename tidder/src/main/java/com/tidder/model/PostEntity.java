@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @XmlRootElement
-@Table(name="posts")
+@Table(name="Posts")
 public class PostEntity {
 
 	@Id
@@ -33,7 +33,7 @@ public class PostEntity {
 	private Date date;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="userId")
+	@JoinColumn(name="UserId")
 	private UserEntity user;
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE, fetch = FetchType.EAGER)
