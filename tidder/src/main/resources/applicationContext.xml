@@ -36,9 +36,10 @@
 
 		<property name="jpaPropertyMap">
 			<map>
-				<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
 				<entry key="hibernate.hbm2ddl.auto" value="none" />
 				<entry key="hibernate.format_sql" value="true" />
+				<entry key="hibernate.default_schema" value="tidder" />
 			</map>
 		</property>
 	</bean>
@@ -50,9 +51,10 @@
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 			
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://localhost:3306/tidder_db?autoReconnect=true"/>
-		<property name="username" value="root"/>
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name="url" value="jdbc:sqlserver://morfeusz.wszib.edu.pl;databaseName=z_35021"/>
+		<property name="username" value="z_35021"/>
+		<property name="password" value="Tesco123"/>
 	</bean>		
 
 </beans>
