@@ -67,22 +67,10 @@
        		 headers : {'Accept' : 'application/json'}
        		};
         $scope.myData="";
-       // getAllPosts($scope.myData);
-        alert($scope.myData);
-        getAllPosts2();
-        function getAllPosts (post) {
-            $http({method: 'GET', url: 'http://localhost:8080/tidder/GetAllPosts.json'})
-            .then( function(response) {
-          	  
-          	  post = response.data;
-            
-            }, function errorCallback(response) {
-          	  
-          	  	alert('ERROR !! ' + response.status);
-          		})
-            
-          }
-        function getAllPosts2() {
+      
+        getAllPosts();
+        
+        function getAllPosts() {
             $scope.mydata='null';
             var config = {
             		 params: data,
