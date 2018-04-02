@@ -97,7 +97,8 @@
 	         
             </div>
 
-				            <div ng-repeat="x in mydata">
+			<!-- <div ng-repeat="x in mydata.slice( ((currentPage-1)*itemsOnPageAmount), (currentPage * itemsOnPageAmount))"> -->
+			<div ng-repeat="x in mydata.slice( (currentPage-1) * ItemsOnPageAmount, currentPage * ItemsOnPageAmount)">
 	            <hr>
 	            <h2>{{x.topic}}</h2>
 	            <h5><span class="glyphicon glyphicon-time"></span> Post by {{x.user.name}}, {{ x.date }}.</h5>
@@ -111,6 +112,8 @@
 	            </div>
 	            <div class="col-xs-3"></div>
 	            <br>
+            </div>
+            <div uib-pagination total-items="mydata.length" ng-model="currentPage" ng-change="setCurrentPage(currentPage)" items-per-page="ItemsOnPageAmount">
             </div>
 
 
