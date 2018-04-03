@@ -11,7 +11,9 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
 <link href="css/bootstrapTemplate.css" rel="stylesheet">
 <script src="js/MainPage.js"></script>
 <script src="scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
@@ -51,28 +53,49 @@
 					<small>RECENT POSTS</small>
 				</h4>
 
-				     <div ng-model="mydata">
-	         
-            </div>
+				<div ng-model="mydata"></div>
 
-			<!-- <div ng-repeat="x in mydata.slice( ((currentPage-1)*itemsOnPageAmount), (currentPage * itemsOnPageAmount))"> -->
-			<div ng-repeat="x in mydata.slice( (currentPage-1) * ItemsOnPageAmount, currentPage * ItemsOnPageAmount)">
-	            <hr>
-	            <h2>{{x.topic}}</h2>
-	            <h5><span class="glyphicon glyphicon-time"></span> Post by {{x.user.name}}, {{ x.date }}.</h5>
-	            <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span></h5><br>
-	            <p> {{ x.text }} </p>
-	            <div class="col-xs-9">
-	            <form method="post">
-	            <input type="text"></input>
-	            <button type="submit">Add comment</button>
-	            </form>
-	            </div>
-	            <div class="col-xs-3"></div>
-	            <br>
-            </div>
-            <div uib-pagination total-items="mydata.length" ng-model="currentPage" ng-change="setCurrentPage(currentPage)" items-per-page="ItemsOnPageAmount">
-            </div>
+				<!-- <div ng-repeat="x in mydata.slice( ((currentPage-1)*itemsOnPageAmount), (currentPage * itemsOnPageAmount))"> -->
+				<div class="comment"
+					ng-repeat="x in mydata.slice( (currentPage-1) * ItemsOnPageAmount, currentPage * ItemsOnPageAmount)  track by $index">
+					<hr>
+					<h2>{{x.topic}}</h2>
+					<h5>
+						<span class="glyphicon glyphicon-time"></span> Post by
+						{{x.user.name}}, {{ x.date }}.
+					</h5>
+					<h5>
+						<span class="label label-danger">Food</span> <span
+							class="label label-primary">Ipsum</span>
+					</h5>
+					<br>
+					<p>{{ x.text }}</p>
+					<div class="col-xs-9">
+
+
+						<!-- 	<button class="btn btn-outline-secondary"
+							ng-click="visibleComment =  !visibleComment">View
+							comments</button> -->
+
+						<div class="comment ">
+						
+							<span class="btn btn-outline-secondary"
+								ng-click="visibleComment = !visibleComment" >View comments</span>
+							<div class="viewComment hideComment" ng-show="visibleComment">
+								<textarea class="" rows="3"></textarea>
+								<button type="submit" class="btn btn-success">Submit</button>
+
+
+							</div>
+
+						</div>
+					</div>
+					<div class="col-xs-3"></div>
+					<br>
+				</div>
+				<div uib-pagination total-items="mydata.length"
+					ng-model="currentPage" ng-change="setCurrentPage(currentPage)"
+					items-per-page="ItemsOnPageAmount"></div>
 
 				<h4>Leave a Comment:</h4>
 				<form role="form">
@@ -81,8 +104,7 @@
 					</div>
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
-				<br>
-				<br>
+				<br> <br>
 
 				<p>
 					<span class="badge">2</span> Comments:
