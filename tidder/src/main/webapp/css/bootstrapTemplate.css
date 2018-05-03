@@ -1,4 +1,8 @@
 /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+ul {
+	list-style-image: url('http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png');
+}
+
 .row.content {
 	height: 1500px
 }
@@ -51,6 +55,7 @@
 .viewComment textarea {
 	width: 100%;
 }
+
 
 /* Set black background color, white text and some padding */
 footer {

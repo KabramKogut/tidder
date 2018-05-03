@@ -78,8 +78,14 @@
 							<div class="button" >
 								<!-- <span class="btn" ng-click="x.data = getCommentById(x.id)">View Comments</span> -->
 								<span class="btn" ng-click="commentVisible = !commentVisible" >View Comments</span>
-								<div ng-show="commentVisible" ng-repeat="temp in temporar[x.id].comments")>
-									<u>@{{temp.user.name}}: {{temp.text}} <strong>{{temp.date}}</strong></u>
+								<div ng-show="commentVisible" ng-repeat="comment in commentByPostId[x.id].comments">
+									<ul>
+										<li>
+											<h4>@{{comment.user.name}}:</h4>
+											<p>{{comment.text}} </p>
+											<p>Date: <strong>{{comment.date}}</strong></p>
+										</li>
+									</ul>
 								</div>
 							<!-- 	<p>x.id {{x.id}}</p>
 								<p>Here are comments for post{{x.comments}}</p>
