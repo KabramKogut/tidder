@@ -48,7 +48,7 @@
 			</div>
 
 			<!--    <div class="col-sm-9" ng-controller="MainPageController"> -->
-			<div class="col-sm-9" ng-controller="PaginationMyController">
+			<div class="col-sm-9" ng-controller="PaginationMyController" ng-init="init()">
 				<h4>
 					<small>RECENT POSTS</small>
 				</h4>
@@ -70,27 +70,24 @@
 					</h5>
 					<br>
 					<p>{{ x.text }}</p>
-					<div class="col-xs-9">
 
-
-						<!-- 	<button class="btn btn-outline-secondary"
-							ng-click="visibleComment =  !visibleComment">View
-							comments</button> -->
-
-						<div class="comment ">
-						
-							<span class="btn btn-outline-secondary"
-								ng-click="visibleComment = !visibleComment" >View comments</span>
-							<div class="viewComment hideComment" ng-show="visibleComment">
-								<textarea class="" rows="3"></textarea>
-								<button type="submit" class="btn btn-success">Submit</button>
-
-
+					
+					<div class="col-xs-11">
+			
+				
+							<div class="button" >
+								<!-- <span class="btn" ng-click="x.data = getCommentById(x.id)">View Comments</span> -->
+								<span class="btn" ng-click="commentVisible = !commentVisible" >View Comments</span>
+								<div ng-show="commentVisible" ng-repeat="temp in temporar[x.id].comments")>
+									<u>@{{temp.user.name}}: {{temp.text}} <strong>{{temp.date}}</strong></u>
+								</div>
+							<!-- 	<p>x.id {{x.id}}</p>
+								<p>Here are comments for post{{x.comments}}</p>
+								<p>Temp: {{x.data}}</p>
+								<p>temporar: {{temporar[x.id]}} "</p> THis is WOrking -->
 							</div>
-
-						</div>
 					</div>
-					<div class="col-xs-3"></div>
+					<div class="col-xs-1"></div>
 					<br>
 				</div>
 				<div uib-pagination total-items="mydata.length"
