@@ -1,25 +1,76 @@
-   /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-        .row.content {height: 1500px}
+/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+ul {
+	list-style-image: url('http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png');
+}
+
+.row.content {
+	height: 1500px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	background-color: #f1f1f1;
+	height: 100%;
+}
+
+.content-area {
+	border: 1px solid black;
+	margin-top: 10px;
+	padding: 10px;
+}
+
+.hideComment {
+	transition: all linear 0.5s;
+}
+
+.hideComment.ng-hide {
+	opacity: 0;
+}
+
+.comment {
+	float: left;
+	position: relative;
+	border: none !important;
+	padding-bottom: 5%;
+}
+.comment  div div span {
+	background-color:silver;
+}
+/* 	.viewComment{
+          transition: all  0.5s;
+  background: lightblue;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+        	} */
+.viewComment {
+	border: 1px solid black;
+	margin-top: 10px;
+	padding: 10px;
+	background: yellow;
+}
+
+.viewComment textarea {
+	width: 100%;
+}
 
 
-        /* Set gray background color and 100% height */
-        .sidenav {
-            background-color: #f1f1f1;
-            height: 100%;
-        }
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
 
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-            .row.content {height: auto;}
-        }
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
