@@ -10,4 +10,6 @@ public interface PostsService {
 	public List<Post> getAllPosts() ;
 
 	public PostWithComments getPostById(int id);
+
+	public List<Post> getPostsByPageId(int id, int size);
 }

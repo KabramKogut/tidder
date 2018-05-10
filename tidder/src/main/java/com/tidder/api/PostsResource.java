@@ -2,10 +2,12 @@ package com.tidder.api;
 
 import java.util.List;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +53,26 @@ public class PostsResource {
 	public PostWithComments getPostById(@PathParam("id") String id) {
 		return postsService.getPostById(Integer.parseInt(id));
 	}
+	
+	/**
+	 * http://localhost:8080/tidder/webapi/post/page/2?size=5
+	 * 
+	 * Produces JSON of specified by page id
+	 * posts with their authors. Amount of posts 
+	 * is specified by query parameter.
+	 * With no query parameter, default size is 10 
+	 * 
+	 * @param id - id of a page  
+	 * @param size - size of a single page
+	 * @return - list of posts
+	 */
+	@GET
+	@Path("page/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Post> getPostsByPageId(@PathParam("id") String id,
+			@DefaultValue("10") @QueryParam("size") int size)  {
+		
+		return postsService.getPostsByPageId(Integer.parseInt(id), size);
+	}
 }
+

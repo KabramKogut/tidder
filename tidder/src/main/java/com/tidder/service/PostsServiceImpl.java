@@ -30,6 +30,13 @@ public class PostsServiceImpl implements PostsService {
 	public PostWithComments getPostById(int id) {
 		return entityToPost(postsRepository.findOne(id));
 	}
+	
+	@Transactional
+	public List<Post> getPostsByPageId(int id, int amount) {
+		int to = id*amount;
+		int from = to-amount;
+		return entityToPost(postsRepository.findBetweenId(from,to));
+	}
 
 	//---------helpers----------
 	
@@ -85,5 +92,6 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setDate(entityPost.getDate());
 		dtoPost.setUser(dtoUser);
 	}
+
 
 }
