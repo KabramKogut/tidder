@@ -12,4 +12,6 @@ public interface PostsService {
 	public PostWithComments getPostById(int id);
 
 	public List<Post> getPostsByPageId(int id, int size);
+
+	public void createPost(Post post);
 }

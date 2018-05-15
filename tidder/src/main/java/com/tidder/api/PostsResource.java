@@ -2,8 +2,10 @@ package com.tidder.api;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,6 +25,28 @@ public class PostsResource {
 	
 	@Autowired
 	private PostsService postsService;
+	
+	/**
+	 * http://localhost:8080/tidder/webapi/post/new
+	 * 
+	 * Commits to database a post submitted in JSON format like below:
+	 * 	{
+	 * 		"topic":"example",
+	 * 		"text":"example"
+	 * 	}
+	 * and returns JSON with full information of it.
+	 * 
+	 * @param post - submitted post
+	 * @return - submitted post with all data
+	 */
+	@POST
+	@Path("new")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Post createPost(Post post) {
+		postsService.createPost(post);
+		return post;
+	}
 	
 	/**
 	 * http://localhost:8080/tidder/webapi/post/all

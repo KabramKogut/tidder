@@ -1,5 +1,6 @@
 package com.tidder.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import com.tidder.api.dto.PostWithComments;
 import com.tidder.api.dto.User;
 import com.tidder.model.CommentEntity;
 import com.tidder.model.PostEntity;
+import com.tidder.model.UserEntity;
+import com.tidder.repository.LoginRepository;
 import com.tidder.repository.PostsRepository;
 
 @Service("postsService")
@@ -20,6 +23,15 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Autowired
 	private PostsRepository postsRepository;
+	
+	@Autowired
+	private LoginRepository loginRepository;
+	
+	@Transactional
+	public void createPost(Post post) {
+		//TO-DO: add binding with real user 
+		postsRepository.save(postToEntity(post));
+	}
 	
 	@Transactional
 	public List<Post> getAllPosts() { 		
@@ -40,6 +52,30 @@ public class PostsServiceImpl implements PostsService {
 
 	//---------helpers----------
 	
+	private PostEntity postToEntity(Post dto) {
+		PostEntity entity = new PostEntity();
+		try {
+			entity.setTopic(dto.getTopic());
+			entity.setText(dto.getText());
+			entity.setDate(new Date(System.currentTimeMillis()));
+			entity.setUser(getAuthenticatedUser());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	
+	@Transactional
+	private UserEntity getAuthenticatedUser() throws Exception {
+		//TO-DO: get really logged user 
+		
+		UserEntity user = loginRepository.findByEmail("congue.turpis.In@molestieorcitincidunt.ca");
+		if (user!=null) {
+			return user;
+		} else {
+			throw new Exception("You must be signed in to submit a new post.");
+		}
+	}
 	
 	private PostWithComments entityToPost(PostEntity entityPost) {
 		PostWithComments dtoPost = new PostWithComments();
@@ -92,6 +128,4 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setDate(entityPost.getDate());
 		dtoPost.setUser(dtoUser);
 	}
-
-
 }
