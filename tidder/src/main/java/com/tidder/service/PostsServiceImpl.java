@@ -3,8 +3,11 @@ package com.tidder.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +31,7 @@ public class PostsServiceImpl implements PostsService {
 	private LoginRepository loginRepository;
 	
 	@Transactional
-	public void createPost(Post post) {
-		//TO-DO: add binding with real user 
+	public void createPost(Post post) { 
 		postsRepository.save(postToEntity(post));
 	}
 	
@@ -40,7 +42,7 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Transactional
 	public PostWithComments getPostById(int id) {
-		return entityToPost(postsRepository.findOne(id));
+		return entityToPost(postsRepository.findById(id));
 	}
 	
 	@Transactional
@@ -66,24 +68,17 @@ public class PostsServiceImpl implements PostsService {
 	}
 	
 	@Transactional
-	private UserEntity getAuthenticatedUser() throws Exception {
-		//TO-DO: get really logged user 
-		
-		UserEntity user = loginRepository.findByEmail("congue.turpis.In@molestieorcitincidunt.ca");
-		if (user!=null) {
-			return user;
-		} else {
-			throw new Exception("You must be signed in to submit a new post.");
-		}
+	private UserEntity getAuthenticatedUser() {		
+		return loginRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());		
 	}
 	
-	private PostWithComments entityToPost(PostEntity entityPost) {
+	private PostWithComments entityToPost(Optional<PostEntity> entityPost) {
 		PostWithComments dtoPost = new PostWithComments();
-		if(entityPost != null) {
+		if(entityPost.isPresent()) {
 			User dtoUser = new User();
 			bindPostWithUser(entityPost,dtoPost,dtoUser);
 			List<Comment> commentsList = new ArrayList<Comment>();
-			for (CommentEntity commentEntity : entityPost.getComments()) {
+			for (CommentEntity commentEntity : entityPost.get().getComments()) {
 				User user = new User();
 				user.setId(commentEntity.getUser().getId());
 				user.setName(commentEntity.getUser().getName());
@@ -116,7 +111,7 @@ public class PostsServiceImpl implements PostsService {
 		return dtoList;
 	}
 	
-	private void bindPostWithUser(PostEntity entityPost, Post dtoPost, User dtoUser) { 
+	private void bindPostWithUser(PostEntity entityPost, Post dtoPost, User dtoUser) {
 		dtoUser.setId(entityPost.getUser().getId());
 		dtoUser.setName(entityPost.getUser().getName());
 		dtoUser.setLastname(entityPost.getUser().getLastname());
@@ -126,6 +121,19 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setTopic(entityPost.getTopic());
 		dtoPost.setText(entityPost.getText());
 		dtoPost.setDate(entityPost.getDate());
+		dtoPost.setUser(dtoUser);
+	}
+
+	private void bindPostWithUser(Optional<PostEntity> entityPost, Post dtoPost, User dtoUser) { 
+		dtoUser.setId(entityPost.get().getUser().getId());
+		dtoUser.setName(entityPost.get().getUser().getName());
+		dtoUser.setLastname(entityPost.get().getUser().getLastname());
+		dtoUser.setEmail(entityPost.get().getUser().getEmail());
+		
+		dtoPost.setId(entityPost.get().getId());
+		dtoPost.setTopic(entityPost.get().getTopic());
+		dtoPost.setText(entityPost.get().getText());
+		dtoPost.setDate(entityPost.get().getDate());
 		dtoPost.setUser(dtoUser);
 	}
 }

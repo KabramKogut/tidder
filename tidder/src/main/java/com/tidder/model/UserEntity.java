@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +31,23 @@ public class UserEntity {
 	private String lastname;
 	@NotEmpty
 	private String password;
+	private boolean enabled;
 	
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<AuthoritiesEntity> authorities;
+
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<PostEntity> posts;
 	
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<CommentEntity> comments;
 	
+	public List<AuthoritiesEntity> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<AuthoritiesEntity> authorities) {
+		this.authorities = authorities;
+	}
 	public List<PostEntity> getPosts() {
 		return posts;
 	}
@@ -79,6 +90,11 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 }
