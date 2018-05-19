@@ -60,7 +60,11 @@ public class PostsServiceImpl implements PostsService {
 			entity.setTopic(dto.getTopic());
 			entity.setText(dto.getText());
 			entity.setDate(new Date(System.currentTimeMillis()));
-			entity.setUser(getAuthenticatedUser());
+			if(getAuthenticatedUser()==null) {
+				entity.setUser(loginRepository.findByEmail("abcd"));
+			} else {
+				entity.setUser(getAuthenticatedUser());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
