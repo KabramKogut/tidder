@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tidder.api.dto.Comment;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
 import com.tidder.service.PostsService;
@@ -25,6 +26,30 @@ public class PostsResource {
 	
 	@Autowired
 	private PostsService postsService;
+	
+	/**
+	 * http://localhost:8080/tidder/webapi/post/{id}/comment
+	 * 
+	 * Commits to database a new comment for post specified in URL by {id} 
+	 * in format like below:
+	 * {
+	 * 		"text":"example"
+	 * }
+	 * and returns JSON with that post with all its comments
+	 * 
+	 * @param id - id of the commented post
+	 * @param comment - submitted comment
+	 * @return commented post with all data
+	 */
+	@POST
+	@Path("{id}/comment")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public PostWithComments createComment(@PathParam("id") String id, Comment comment) {
+		int postId = Integer.parseInt(id);
+		postsService.createComment(comment,postId);
+		return postsService.getPostById(postId);
+	}
 	
 	/**
 	 * http://localhost:8080/tidder/webapi/post/new
@@ -95,7 +120,6 @@ public class PostsResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Post> getPostsByPageId(@PathParam("id") String id,
 			@DefaultValue("10") @QueryParam("size") int size)  {
-		
 		return postsService.getPostsByPageId(Integer.parseInt(id), size);
 	}
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,7 @@ import com.tidder.api.dto.User;
 import com.tidder.model.CommentEntity;
 import com.tidder.model.PostEntity;
 import com.tidder.model.UserEntity;
+import com.tidder.repository.CommentsRepository;
 import com.tidder.repository.LoginRepository;
 import com.tidder.repository.PostsRepository;
 
@@ -29,7 +29,15 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Autowired
 	private LoginRepository loginRepository;
+
+	@Autowired
+	private CommentsRepository commentsRepository;
 	
+	@Transactional
+	public void createComment(Comment comment, int postId) {
+		commentsRepository.save(commentToEntity(comment, postId));
+	}
+
 	@Transactional
 	public void createPost(Post post) { 
 		postsRepository.save(postToEntity(post));
@@ -52,7 +60,31 @@ public class PostsServiceImpl implements PostsService {
 		return entityToPost(postsRepository.findBetweenId(from,to));
 	}
 
-	//---------helpers----------
+	//---------HELPERS----------
+	
+	@Transactional
+	private UserEntity getAuthenticatedUser() {		
+		return loginRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());		
+	}
+	
+	//---------dao -> entity----------
+	
+	private CommentEntity commentToEntity(Comment comment, int postId) {
+		CommentEntity entity = new CommentEntity();
+		try {
+			entity.setText(comment.getText());
+			entity.setDate(new Date(System.currentTimeMillis()));
+			entity.setPost(postsRepository.findById(postId).get());
+			if(getAuthenticatedUser()==null) {
+				entity.setUser(loginRepository.findByEmail("abcd"));
+			} else {
+				entity.setUser(getAuthenticatedUser());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
 	
 	private PostEntity postToEntity(Post dto) {
 		PostEntity entity = new PostEntity();
@@ -71,10 +103,7 @@ public class PostsServiceImpl implements PostsService {
 		return entity;
 	}
 	
-	@Transactional
-	private UserEntity getAuthenticatedUser() {		
-		return loginRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());		
-	}
+	//---------entity -> dao----------
 	
 	private PostWithComments entityToPost(Optional<PostEntity> entityPost) {
 		PostWithComments dtoPost = new PostWithComments();
@@ -114,6 +143,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return dtoList;
 	}
+	
+	//---------binders----------
 	
 	private void bindPostWithUser(PostEntity entityPost, Post dtoPost, User dtoUser) {
 		dtoUser.setId(entityPost.getUser().getId());
