@@ -36,27 +36,29 @@ public class PostsResource {
 	private LikesService likesService;
 	
 	/**
-	 * http://localhost:8080/tidder/webapi/post/{id}/like
+	 * http://localhost:8080/tidder/webapi/post/like?post=155
 	 * 
+	 * Triggers the like button on specified post.
+	 * Query parameter points to ID of post.
 	 * 
+	 * Doesn't consume and doesn't produce anything
 	 */
 	@POST
-	@Path("{id}/like")
-	public void likePost(@PathParam("id") String id) {
-		likesService.like(Integer.parseInt(id));
+	@Path("like")
+	public void likePost(@QueryParam("post") int id) {
+		likesService.likePost(id);
 	}
 	
 	/**
 	 *  http://localhost:8080/tidder/webapi/post/{idPost}/{idComment}/like
 	 *  
-	 *  
+	 *  under construction...
 	 */
 	@POST
-	@Path("{idPost}/{idComment}/like")
+	@Path("like/{idPost}/{idComment}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void likeComment(@PathParam("idPost") String idPost, @PathParam("idComment") String idComment) {
-		// like
-		likesService.commentLike(Integer.parseInt(idPost),Integer.parseInt(idComment));
+		likesService.likeComment(Integer.parseInt(idPost),Integer.parseInt(idComment));
 	}
 	
 	/**

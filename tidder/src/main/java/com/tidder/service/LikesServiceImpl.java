@@ -28,7 +28,7 @@ public class LikesServiceImpl implements LikesService {
 	private PostsRepository postsRepository;
 
 	@Transactional
-	public void like(int postId) {
+	public void likePost(int postId) {
 		if(getAuthenticatedUser() == null) { // default abcd user
 			if(likePostsRepository.getByIds(102, postId) == null) {
 				likePostsRepository.save(createLikePost(postId));
@@ -45,7 +45,7 @@ public class LikesServiceImpl implements LikesService {
 	}
 
 	@Transactional
-	public void commentLike(int postId, int commentId) {
+	public void likeComment(int postId, int commentId) {
 		// to do
 	}
 	
