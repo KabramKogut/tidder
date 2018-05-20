@@ -33,6 +33,12 @@ public class UserEntity {
 	private String password;
 	private boolean enabled;
 	
+	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
+	private List<LikeCommentEntity> commentLikes;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
+	private List<LikePostEntity> postLikes;
+	
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<AuthoritiesEntity> authorities;
 
@@ -42,6 +48,18 @@ public class UserEntity {
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<CommentEntity> comments;
 	
+	public List<LikeCommentEntity> getCommentLikes() {
+		return commentLikes;
+	}
+	public void setCommentLikes(List<LikeCommentEntity> commentLikes) {
+		this.commentLikes = commentLikes;
+	}
+	public List<LikePostEntity> getPostLikes() {
+		return postLikes;
+	}
+	public void setPostLikes(List<LikePostEntity> postLikes) {
+		this.postLikes = postLikes;
+	}
 	public List<AuthoritiesEntity> getAuthorities() {
 		return authorities;
 	}

@@ -40,6 +40,9 @@ public class PostEntity {
 	private UserEntity user;
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE)
+	private List<LikePostEntity> likes;
+	
+	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE)
 	private List<CommentEntity> comments;
 	
 	@Override
@@ -51,6 +54,12 @@ public class PostEntity {
 		return "Id: " + id + ", topic: " + topic + ", text: " + 
 				text + ", date: " + date.toString() + ", user: " + 
 				user.toString() + ", "+ commentsString.toString();
+	}
+	public List<LikePostEntity> getLikes() {
+		return likes;
+	}
+	public void setLikes(List<LikePostEntity> likes) {
+		this.likes = likes;
 	}
 	public List<CommentEntity> getComments() {
 		return comments;
@@ -64,7 +73,6 @@ public class PostEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getTopic() {
 		return topic;
 	}
@@ -89,6 +97,4 @@ public class PostEntity {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	
-
 }

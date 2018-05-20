@@ -28,6 +28,28 @@ public class PostsResource {
 	private PostsService postsService;
 	
 	/**
+	 * http://localhost:8080/tidder/webapi/post/{id}/like
+	 * 
+	 * 
+	 */
+	@POST
+	@Path("{id}/like")
+	public void likePost(@PathParam("id") String id) {
+		// like 
+	}
+	
+	/**
+	 *  http://localhost:8080/tidder/webapi/post/{idPost}/{idComment}/like
+	 *  
+	 *  
+	 */
+	@POST
+	@Path("{idPost}/{idComment}/like")
+	public void likeComment(@PathParam("idPost") String idPost, @PathParam("idComment") String idComment) {
+		// like
+	}
+	
+	/**
 	 * http://localhost:8080/tidder/webapi/post/{id}/comment
 	 * 
 	 * Commits to database a new comment for post specified in URL by {id} 
