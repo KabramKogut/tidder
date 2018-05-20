@@ -30,14 +30,6 @@ public class PostsServiceImpl implements PostsService {
 	@Autowired
 	private LoginRepository loginRepository;
 
-	@Autowired
-	private CommentsRepository commentsRepository;
-	
-	@Transactional
-	public void createComment(Comment comment, int postId) {
-		commentsRepository.save(commentToEntity(comment, postId));
-	}
-
 	@Transactional
 	public void createPost(Post post) { 
 		postsRepository.save(postToEntity(post));
@@ -60,7 +52,7 @@ public class PostsServiceImpl implements PostsService {
 		return entityToPost(postsRepository.findBetweenId(from,to));
 	}
 
-	//---------HELPERS----------
+	//---------HELPERS--------------------------------------------------
 	
 	@Transactional
 	private UserEntity getAuthenticatedUser() {		
@@ -68,23 +60,6 @@ public class PostsServiceImpl implements PostsService {
 	}
 	
 	//---------dao -> entity----------
-	
-	private CommentEntity commentToEntity(Comment comment, int postId) {
-		CommentEntity entity = new CommentEntity();
-		try {
-			entity.setText(comment.getText());
-			entity.setDate(new Date(System.currentTimeMillis()));
-			entity.setPost(postsRepository.findById(postId).get());
-			if(getAuthenticatedUser()==null) {
-				entity.setUser(loginRepository.findByEmail("abcd"));
-			} else {
-				entity.setUser(getAuthenticatedUser());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
 	
 	private PostEntity postToEntity(Post dto) {
 		PostEntity entity = new PostEntity();

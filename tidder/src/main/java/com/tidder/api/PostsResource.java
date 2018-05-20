@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.tidder.api.dto.Comment;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
+import com.tidder.service.CommentsService;
+import com.tidder.service.LikesService;
 import com.tidder.service.PostsService;
 
 @Component
@@ -27,6 +29,12 @@ public class PostsResource {
 	@Autowired
 	private PostsService postsService;
 	
+	@Autowired
+	private CommentsService commentsService;
+	
+	@Autowired
+	private LikesService likesService;
+	
 	/**
 	 * http://localhost:8080/tidder/webapi/post/{id}/like
 	 * 
@@ -35,7 +43,7 @@ public class PostsResource {
 	@POST
 	@Path("{id}/like")
 	public void likePost(@PathParam("id") String id) {
-		// like 
+		likesService.like(Integer.parseInt(id));
 	}
 	
 	/**
@@ -45,8 +53,10 @@ public class PostsResource {
 	 */
 	@POST
 	@Path("{idPost}/{idComment}/like")
+	@Produces(MediaType.APPLICATION_JSON)
 	public void likeComment(@PathParam("idPost") String idPost, @PathParam("idComment") String idComment) {
 		// like
+		likesService.commentLike(Integer.parseInt(idPost),Integer.parseInt(idComment));
 	}
 	
 	/**
@@ -69,7 +79,7 @@ public class PostsResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public PostWithComments createComment(@PathParam("id") String id, Comment comment) {
 		int postId = Integer.parseInt(id);
-		postsService.createComment(comment,postId);
+		commentsService.createComment(comment,postId);
 		return postsService.getPostById(postId);
 	}
 	
