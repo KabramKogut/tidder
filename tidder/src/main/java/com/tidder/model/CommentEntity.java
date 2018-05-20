@@ -30,7 +30,7 @@ public class CommentEntity {
 	@NotNull
 	private Date date;
 	
-	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="comment", cascade=CascadeType.REMOVE)
 	private List<LikeCommentEntity> likes;
 	
 	@ManyToOne

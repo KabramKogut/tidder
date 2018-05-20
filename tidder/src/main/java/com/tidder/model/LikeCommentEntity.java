@@ -27,10 +27,16 @@ public class LikeCommentEntity {
 	private UserEntity user;
 	
 	@ManyToOne
-	@JoinColumn(name="PostId")
+	@JoinColumn(name="CommentId")
 	@Fetch(FetchMode.JOIN)
-	private PostEntity post;
+	private CommentEntity comment;
 
+	public CommentEntity getComment() {
+		return comment;
+	}
+	public void setComment(CommentEntity comment) {
+		this.comment = comment;
+	}
 	public int getId() {
 		return id;
 	}
@@ -43,10 +49,5 @@ public class LikeCommentEntity {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	public PostEntity getPost() {
-		return post;
-	}
-	public void setPost(PostEntity post) {
-		this.post = post;
-	}
+
 }
