@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.tidder.api.dto.Comment;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
+import com.tidder.api.dto.PostsAmount;
 import com.tidder.service.CommentsService;
 import com.tidder.service.LikesService;
 import com.tidder.service.PostsService;
@@ -157,6 +158,20 @@ public class PostsResource {
 	public List<Post> getPostsByPageId(@PathParam("id") String id,
 			@DefaultValue("10") @QueryParam("size") int size)  {
 		return postsService.getPostsByPageId(Integer.parseInt(id), size);
+	}
+	
+	/**
+	 * http://localhost:8080/tidder/webapi/post/all/amount
+	 * 
+	 * Produces JSON which shows the amount of existing posts
+	 * 
+	 * @return - amount of posts
+	 */
+	@GET
+	@Path("all/amount")
+	@Produces(MediaType.APPLICATION_JSON)
+	public PostsAmount getPostsAmmount() {
+		return postsService.getPostsAmmount();
 	}
 }
 

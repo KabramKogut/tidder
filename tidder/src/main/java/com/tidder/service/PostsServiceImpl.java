@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tidder.api.dto.Comment;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
+import com.tidder.api.dto.PostsAmount;
 import com.tidder.api.dto.User;
 import com.tidder.model.CommentEntity;
 import com.tidder.model.PostEntity;
@@ -37,6 +38,13 @@ public class PostsServiceImpl implements PostsService {
 	@Transactional
 	public List<Post> getAllPosts() { 		
 		return entityToPost(postsRepository.findAll());
+	}
+	
+	@Transactional
+	public PostsAmount getPostsAmmount() {
+		PostsAmount amount = new PostsAmount();
+		amount.setAmmount(postsRepository.getPostsAmmount());
+		return amount;
 	}
 	
 	@Transactional
@@ -148,4 +156,6 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setLikes(entityPost.get().getTotalLikes());
 		dtoPost.setUser(dtoUser);
 	}
+
+
 }
