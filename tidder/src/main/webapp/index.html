@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -14,6 +16,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.js"></script>
 <link href="css/bootstrapTemplate.css" rel="stylesheet">
 <script src="js/MainPage.js"></script>
 <script src="scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
@@ -35,6 +39,7 @@
 					<li><a href="#section2">Friends</a></li>
 					<li><a href="#section3">Family</a></li>
 					<li><a href="#section3">Photos</a></li>
+					<li><p>{{dataPerPage}}</p></li>
 				</ul>
 				<br>
 				<div class="input-group">
@@ -57,9 +62,7 @@
 
 				<div ng-model="mydata"></div>
 
-				<!-- <div ng-repeat="x in mydata.slice( ((currentPage-1)*itemsOnPageAmount), (currentPage * itemsOnPageAmount))"> -->
-				<div class="comment"
-					ng-repeat="x in dataPerPage track by $index">
+				<div class="comment" ng-repeat="x in dataPerPage track by $index">
 					<hr>
 					<h2>{{x.topic}}</h2>
 					<h5>
@@ -93,11 +96,11 @@
 								<br>
 								<h4>Leave a Comment:</h4>
 								<form role="form" ng-submit="sendComment(x.id, comment.text)">
-									
 									<div class="form-group">
 										<label>Body:</label>
-										<textarea name="text" ng-model="comment.text" class="form-control" rows="2"></textarea>
-										
+										<textarea name="text" ng-model="comment.text"
+											class="form-control" rows="2"></textarea>
+
 									</div>
 									<button type="submit" class="btn btn-success">Add</button>
 								</form>
@@ -111,17 +114,14 @@
 					<div class="col-xs-1"></div>
 					<br>
 				</div>
-				<div uib-pagination total-items="allItemsAmount"
-					ng-model="currentPage" ng-change="setCurrentPage(currentPage)"
+				<div uib-pagination total-items="postsTotal" ng-model="currentPage"
+					ng-change="setCurrentPage(currentPage)"
 					items-per-page="ItemsOnPageAmount"></div>
-
 				<br>
-
 				<p>
 					<span class="badge">2</span> Comments:
 				</p>
 				<br>
-
 				<div class="row">
 					<div class="col-sm-2 text-center">
 						<!-- <img src="bandmember.jpg" class="img-circle" height="65" width="65" alt="Avatar">-->
