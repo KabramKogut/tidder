@@ -14,5 +14,8 @@ public interface PostsRepository extends JpaRepository<PostEntity, Integer> {
 
 	@Query("SELECT p FROM PostEntity p WHERE p.id BETWEEN :from AND :to")
 	public List<PostEntity> findBetweenId(@Param("from") int from, @Param("to") int to);
+	
+	@Query("SELECT count(p) FROM PostEntity p")
+	public int getPostsAmmount();
 
 }

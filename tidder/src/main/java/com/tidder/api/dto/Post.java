@@ -12,7 +12,7 @@ public class Post implements Serializable {
 	private Date date;
 	private User user;
 	private int likes;
-	
+
 	public int getLikes() {
 		return likes;
 	}
