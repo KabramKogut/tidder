@@ -17,7 +17,6 @@ import com.tidder.api.dto.User;
 import com.tidder.model.CommentEntity;
 import com.tidder.model.PostEntity;
 import com.tidder.model.UserEntity;
-import com.tidder.repository.CommentsRepository;
 import com.tidder.repository.LoginRepository;
 import com.tidder.repository.PostsRepository;
 
@@ -29,14 +28,6 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Autowired
 	private LoginRepository loginRepository;
-
-	@Autowired
-	private CommentsRepository commentsRepository;
-	
-	@Transactional
-	public void createComment(Comment comment, int postId) {
-		commentsRepository.save(commentToEntity(comment, postId));
-	}
 
 	@Transactional
 	public void createPost(Post post) { 
@@ -55,12 +46,12 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Transactional
 	public List<Post> getPostsByPageId(int id, int amount) {
-		int to = id*amount;
-		int from = to-amount;
+		int to = (id*amount) - 1;
+		int from = (to-amount) + 1;
 		return entityToPost(postsRepository.findBetweenId(from,to));
 	}
 
-	//---------HELPERS----------
+	//---------HELPERS--------------------------------------------------
 	
 	@Transactional
 	private UserEntity getAuthenticatedUser() {		
@@ -68,23 +59,6 @@ public class PostsServiceImpl implements PostsService {
 	}
 	
 	//---------dao -> entity----------
-	
-	private CommentEntity commentToEntity(Comment comment, int postId) {
-		CommentEntity entity = new CommentEntity();
-		try {
-			entity.setText(comment.getText());
-			entity.setDate(new Date(System.currentTimeMillis()));
-			entity.setPost(postsRepository.findById(postId).get());
-			if(getAuthenticatedUser()==null) {
-				entity.setUser(loginRepository.findByEmail("abcd"));
-			} else {
-				entity.setUser(getAuthenticatedUser());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
 	
 	private PostEntity postToEntity(Post dto) {
 		PostEntity entity = new PostEntity();
@@ -122,6 +96,7 @@ public class PostsServiceImpl implements PostsService {
 				comment.setId(commentEntity.getUser().getId());
 				comment.setText(commentEntity.getText());
 				comment.setDate(commentEntity.getDate());
+				comment.setLikes(commentEntity.getTotalLikes());
 				comment.setUser(user);
 				commentsList.add(comment);
 			}
@@ -156,6 +131,7 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setTopic(entityPost.getTopic());
 		dtoPost.setText(entityPost.getText());
 		dtoPost.setDate(entityPost.getDate());
+		dtoPost.setLikes(entityPost.getTotalLikes());
 		dtoPost.setUser(dtoUser);
 	}
 
@@ -169,6 +145,7 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setTopic(entityPost.get().getTopic());
 		dtoPost.setText(entityPost.get().getText());
 		dtoPost.setDate(entityPost.get().getDate());
+		dtoPost.setLikes(entityPost.get().getTotalLikes());
 		dtoPost.setUser(dtoUser);
 	}
 }

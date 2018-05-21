@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.tidder.api.dto.Comment;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
+import com.tidder.service.CommentsService;
+import com.tidder.service.LikesService;
 import com.tidder.service.PostsService;
 
 @Component
@@ -26,6 +28,40 @@ public class PostsResource {
 	
 	@Autowired
 	private PostsService postsService;
+	
+	@Autowired
+	private CommentsService commentsService;
+	
+	@Autowired
+	private LikesService likesService;
+	
+	/**
+	 * http://localhost:8080/tidder/webapi/post/like/post?id=155
+	 * 
+	 * Triggers the like button on specified post.
+	 * Query parameter points to ID of the post.
+	 * 
+	 * Doesn't consume and doesn't produce anything
+	 */
+	@POST
+	@Path("like/post")
+	public void likePost(@QueryParam("id") int id) {
+		likesService.likePost(id);
+	}
+	
+	/**
+	 *  http://localhost:8080/tidder/webapi/post/like/comment?id=212
+	 *  
+	 *  Triggers the like button on specified comment.
+	 *  Query parameter points to ID of the comment.
+	 *  
+	 *  Doesn't consume and doesn't produce anything
+	 */
+	@POST
+	@Path("like/comment")
+	public void likeComment(@QueryParam("id") int id) {
+		likesService.likeComment(id);
+	}
 	
 	/**
 	 * http://localhost:8080/tidder/webapi/post/{id}/comment
@@ -47,7 +83,7 @@ public class PostsResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public PostWithComments createComment(@PathParam("id") String id, Comment comment) {
 		int postId = Integer.parseInt(id);
-		postsService.createComment(comment,postId);
+		commentsService.createComment(comment,postId);
 		return postsService.getPostById(postId);
 	}
 	

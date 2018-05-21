@@ -7,45 +7,47 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
-@Table(name="Authorities")
-public class AuthoritiesEntity {
+@XmlRootElement
+@Table(name="CommentLikes")
+public class LikeCommentEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@NotEmpty
-	private String authority;
-	
 	@ManyToOne
 	@JoinColumn(name="UserId")
+	@Fetch(FetchMode.JOIN)
 	private UserEntity user;
+	
+	@ManyToOne
+	@JoinColumn(name="CommentId")
+	@Fetch(FetchMode.JOIN)
+	private CommentEntity comment;
 
+	public CommentEntity getComment() {
+		return comment;
+	}
+	public void setComment(CommentEntity comment) {
+		this.comment = comment;
+	}
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getAuthority() {
-		return authority;
-	}
-
-	public void setAuthority(String authority) {
-		this.authority = authority;
-	}
-
 	public UserEntity getUser() {
 		return user;
 	}
-
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
+
 }
