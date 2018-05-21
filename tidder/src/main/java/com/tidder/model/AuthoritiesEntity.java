@@ -1,7 +1,6 @@
 package com.tidder.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +21,7 @@ public class AuthoritiesEntity {
 	@NotEmpty
 	private String authority;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="UserId")
 	private UserEntity user;
 

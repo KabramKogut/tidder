@@ -17,7 +17,6 @@ import com.tidder.api.dto.User;
 import com.tidder.model.CommentEntity;
 import com.tidder.model.PostEntity;
 import com.tidder.model.UserEntity;
-import com.tidder.repository.CommentsRepository;
 import com.tidder.repository.LoginRepository;
 import com.tidder.repository.PostsRepository;
 
@@ -47,8 +46,8 @@ public class PostsServiceImpl implements PostsService {
 	
 	@Transactional
 	public List<Post> getPostsByPageId(int id, int amount) {
-		int to = id*amount;
-		int from = to-amount;
+		int to = (id*amount) - 1;
+		int from = (to-amount) + 1;
 		return entityToPost(postsRepository.findBetweenId(from,to));
 	}
 

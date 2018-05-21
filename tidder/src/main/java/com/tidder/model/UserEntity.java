@@ -1,13 +1,15 @@
 package com.tidder.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,8 +20,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @XmlRootElement
 @Table(name="Users")
-public class UserEntity {
-	
+@NamedEntityGraph(name="authorization",
+	attributeNodes = @NamedAttributeNode(value="authorities"))
+public class UserEntity implements Serializable {
+
+	private static final long serialVersionUID = -8782855747936633473L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -39,7 +44,7 @@ public class UserEntity {
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<LikePostEntity> postLikes;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
 	private List<AuthoritiesEntity> authorities;
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
