@@ -5,13 +5,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,12 +37,19 @@ public class PostEntity {
 	@NotNull
 	private Date date;
 	
+	@Transient
+	private int totalLikes;
+	@PostLoad
+	public void onLoad() {
+		this.totalLikes = likes.size();
+	}
+	
 	@ManyToOne
 	@JoinColumn(name="UserId")
 	@Fetch(FetchMode.JOIN)
 	private UserEntity user;
 	
-	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private List<LikePostEntity> likes;
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.REMOVE)
@@ -54,6 +64,12 @@ public class PostEntity {
 		return "Id: " + id + ", topic: " + topic + ", text: " + 
 				text + ", date: " + date.toString() + ", user: " + 
 				user.toString() + ", "+ commentsString.toString();
+	}
+	public int getTotalLikes() {
+		return totalLikes;
+	}
+	public void setTotalLikes(int totalLikes) {
+		this.totalLikes = totalLikes;
 	}
 	public List<LikePostEntity> getLikes() {
 		return likes;

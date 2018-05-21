@@ -96,6 +96,7 @@ public class PostsServiceImpl implements PostsService {
 				comment.setId(commentEntity.getUser().getId());
 				comment.setText(commentEntity.getText());
 				comment.setDate(commentEntity.getDate());
+				comment.setLikes(commentEntity.getTotalLikes());
 				comment.setUser(user);
 				commentsList.add(comment);
 			}
@@ -130,6 +131,7 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setTopic(entityPost.getTopic());
 		dtoPost.setText(entityPost.getText());
 		dtoPost.setDate(entityPost.getDate());
+		dtoPost.setLikes(entityPost.getTotalLikes());
 		dtoPost.setUser(dtoUser);
 	}
 
@@ -143,6 +145,7 @@ public class PostsServiceImpl implements PostsService {
 		dtoPost.setTopic(entityPost.get().getTopic());
 		dtoPost.setText(entityPost.get().getText());
 		dtoPost.setDate(entityPost.get().getDate());
+		dtoPost.setLikes(entityPost.get().getTotalLikes());
 		dtoPost.setUser(dtoUser);
 	}
 }
