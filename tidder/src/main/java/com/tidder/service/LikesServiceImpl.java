@@ -60,18 +60,27 @@ public class LikesServiceImpl implements LikesService {
 	}
 
 	@Transactional
-	public void likeComment(int commentId) {
+	public LikeResponse likeComment(int commentId) {
+		LikeResponse response = new LikeResponse();
 		if(getAuthenticatedUser() == null) {// default abcd user
 			if(likeCommentsRepository.getByIds(102, commentId) == null) {
 				likeCommentsRepository.save(createLikeComment(commentId));
+				response.setLiked(true);
+				return response;
 			} else {
 				likeCommentsRepository.delete(102, commentId);
+				response.setLiked(false);
+				return response;
 			}
 		} else { // authenticated user
 			if(likeCommentsRepository.getByIds(getAuthenticatedUser().getId(), commentId) == null) {
 				likeCommentsRepository.save(createLikeComment(commentId));
+				response.setLiked(true);
+				return response;
 			} else {
 				likeCommentsRepository.delete(getAuthenticatedUser().getId(), commentId);
+				response.setLiked(false);
+				return response;
 			}
 		}
 	}
