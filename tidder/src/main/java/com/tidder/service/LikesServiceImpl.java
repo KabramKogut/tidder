@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tidder.api.dto.LikeResponse;
 import com.tidder.model.LikeCommentEntity;
 import com.tidder.model.LikePostEntity;
 import com.tidder.model.UserEntity;
@@ -33,18 +34,27 @@ public class LikesServiceImpl implements LikesService {
 	private CommentsRepository commentsRepository;
 
 	@Transactional
-	public void likePost(int postId) {
+	public LikeResponse likePost(int postId) {
+		LikeResponse response = new LikeResponse();
 		if(getAuthenticatedUser() == null) { // default abcd user
 			if(likePostsRepository.getByIds(102, postId) == null) {
 				likePostsRepository.save(createLikePost(postId));
+				response.setLiked(true);
+				return response;
 			} else {
 				likePostsRepository.delete(102, postId);
+				response.setLiked(false);
+				return response;
 			}
 		} else { // authenticated user
 			if(likePostsRepository.getByIds(getAuthenticatedUser().getId(), postId) == null) {
 				likePostsRepository.save(createLikePost(postId));
+				response.setLiked(true);
+				return response;
 			} else {
 				likePostsRepository.delete(getAuthenticatedUser().getId(), postId);
+				response.setLiked(false);
+				return response;
 			}
 		}
 	}
