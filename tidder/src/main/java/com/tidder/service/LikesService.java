@@ -6,6 +6,6 @@ public interface LikesService {
 
 	LikeResponse likePost(int postId);
 
-	void likeComment(int postId);
+	LikeResponse likeComment(int postId);
 	
 }

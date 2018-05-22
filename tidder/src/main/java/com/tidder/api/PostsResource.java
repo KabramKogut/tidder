@@ -61,8 +61,8 @@ public class PostsResource {
 	 */
 	@POST
 	@Path("like/comment")
-	public void likeComment(@QueryParam("id") int id) {
-		likesService.likeComment(id);
+	public LikeResponse likeComment(@QueryParam("id") int id) {
+		return likesService.likeComment(id);
 	}
 	
 	/**
