@@ -8,17 +8,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Tidder create Page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.js"></script>
+<link href="css/bootstrapTemplate.css" rel="stylesheet">
+<script src="js/MainPage.js"></script>
+<script src="scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="js/Login.js"></script>
 
 <title>Tidder new account</title>
 </head>
 
 <body>
-	<div class="container">
-		<div class="createForm">
-			<h3>
-				<strong>Create Account</strong>
-			</h3>
-			<div>
+
+			<div class="container loginPage" ng-controller="LoginController">
+	<div class="row">
+
+		<div class="content">
+			<div class="createAccountForm">
 				<c:choose>
 					<c:when test="${not empty error}">
 						<div class="alert alert-danger">
@@ -27,7 +48,19 @@
 						</div>
 					</c:when>
 				</c:choose>
+				<div class="col-md-1">
+			
+				</div>
+				<div class="col-md-2 haveFun">
+					<p>You can register here and have fun with other users</p>
+				<span class="glyphicon glyphicon-hand-right"></span>
+				<span class="glyphicon glyphicon-record"></span>
+				</div>
+				<div class="col-md-4 col-md-offset-3 credentials">
+				
+				    </br>
 				<form:form modelAttribute="userProfile">
+				    <h2>Create Account</h2>
 					<table>
 						<tr>
 							<td>Email:</td>
@@ -53,9 +86,13 @@
 									id="lastname" placeholder="Enter lastname" /></td>
 							<td><form:errors path="lastname" cssClass="error" /></td>
 						</tr>
+				
 					</table>
-					<button type="submit">Submit</button>
+							<button class="btn btn-submit" type="submit">Submit</button>
 				</form:form>
+				</div>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>

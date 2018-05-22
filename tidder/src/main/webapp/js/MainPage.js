@@ -46,18 +46,10 @@
 									'Accept' : 'application/json'
 								}
 							};
-			/*				$.ajax({
-								type: 'get',
-								url: "http://localhost:8080/tidder/webapi/post/page/2",
-								headers: { "content-type" : "application/json"} 
-								}).done(function(response) {	
-						    } );*/
 							
 							$http.get('http://localhost:8080/tidder/webapi/post/page/'+ page, config)
-									.then(
-											function(data) {
+									.then( function(data) {
 												$scope.dataPerPageTemp = data.data;
-												
 												angular.forEach($scope.dataPerPageTemp,
 														function(obj) {
 													if(obj.id.length !==0) {
@@ -69,14 +61,27 @@
 													obj.commentData = $scope.getCommentById(obj.id)
 												});
 												console.log($scope.dataPerPage);
-								
-											
 												 blockUI.stop();
 											}, function(res) {
 												alert('failure' + res);
 											});
 						}
 
+						$scope.likePost = function(postId) {
+							blockUI.start();
+							$http({
+								method : "post",
+								url : "http://localhost:8080/tidder/webapi/post/like/post?id=" + postId ,
+								data : data
+							})
+							.then(
+									function(response) {
+										blockUI.stop();
+										
+									}, function(response) {
+										alert('failure' + response);
+									})
+						}
 						function getAllPosts() {
 							var config = {
 								params : data,
@@ -150,12 +155,9 @@
 									'Accept' : 'application/json'
 								}
 							};
-
-							var resultset = $http
-									.get(
+							var resultset = $http.get(
 											'http://localhost:8080/tidder/webapi/post/'
-													+ postId)
-									.then(
+													+ postId).then(
 											function(result) {
 												if ($scope.dataPerPage[postId] == null
 														|| $scope.mydata[postId] === 'undefined') {

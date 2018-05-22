@@ -22,11 +22,10 @@
 <script src="js/MainPage.js"></script>
 <script src="scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
-
 </head>
 <body ng-app="Tidder">
 
-	<div class="container-fluid">
+	<div class="container-fluid" id="style-9">
 		<div class="row content">
 			<div class="col-sm-2 sidenav">
 				<h4>Tidder</h4>
@@ -53,7 +52,7 @@
 			</div>
 
 			<!--    <div class="col-sm-9" ng-controller="MainPageController"> -->
-			<div class="col-sm-9" ng-controller="PaginationMyController"
+			<div class="col-sm-9 mainPage" ng-controller="PaginationMyController"
 				ng-init="init()">
 				<h4>
 					<small>RECENT POSTS</small>
@@ -63,18 +62,28 @@
 				<div ng-model="mydata"></div>
 
 				<div class="comment" ng-repeat="x in dataPerPage track by $index">
+					<div class="container">
+						<div class="row">
+						</div>
+					</div>
 					<hr>
 					<h2>{{x.topic}}</h2>
 					<h5>
 						<span class="glyphicon glyphicon-time"></span> Post by
 						{{x.user.name}}, {{ x.date }}.
 					</h5>
+					<button class="btn" ng-click="likePost(x.id, x.likes); x.likes = x.likes + 1;">
+					<span class="glyphicon glyphicon-chevron-up" ></span>
+					</button>
+					<kbd>{{x.likes}}</kbd>
+				
+					<span ></span>
 					<h5>
 						<span class="label label-danger">Food</span> <span
 							class="label label-primary">Ipsum</span>
 					</h5>
 					<br>
-					<p>{{ x.text }}</p>
+					<p class="well">{{ x.text }}</p>
 					<div class="col-xs-11">
 						<div class="button">
 							<!-- <span class="btn" ng-click="x.data = getCommentById(x.id)">View Comments</span> -->
@@ -83,12 +92,16 @@
 							<div ng-show="commentVisible"
 								ng-repeat="comment in commentByPostId[x.id].comments">
 								<ul>
-									<li>
+									<li >
 										<h4>@{{comment.user.name}}:</h4>
+										<div class="well">
 										<p>{{comment.text}}</p>
 										<p>
 											Date: <strong>{{comment.date}}</strong>
 										</p>
+										</div>
+										
+										
 									</li>
 								</ul>
 							</div>
