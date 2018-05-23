@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.tidder.api.dto.Comment;
+import com.tidder.api.dto.LikeResponse;
 import com.tidder.api.dto.Post;
 import com.tidder.api.dto.PostWithComments;
 import com.tidder.api.dto.PostsAmount;
@@ -46,8 +47,8 @@ public class PostsResource {
 	 */
 	@POST
 	@Path("like/post")
-	public void likePost(@QueryParam("id") int id) {
-		likesService.likePost(id);
+	public LikeResponse likePost(@QueryParam("id") int id) {
+		return likesService.likePost(id);
 	}
 	
 	/**
@@ -60,8 +61,8 @@ public class PostsResource {
 	 */
 	@POST
 	@Path("like/comment")
-	public void likeComment(@QueryParam("id") int id) {
-		likesService.likeComment(id);
+	public LikeResponse likeComment(@QueryParam("id") int id) {
+		return likesService.likeComment(id);
 	}
 	
 	/**
