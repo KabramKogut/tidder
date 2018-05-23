@@ -2,15 +2,18 @@
 ul {
 	list-style-image: url('http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png');
 }
-
-.row.content {
-	height: 1500px
+.container-fluid {
+	width:100%;
 }
+.content {
+	overflow:hidden;
+}
+
 
 /* Set gray background color and 100% height */
 .sidenav {
 	background-color: #f1f1f1;
-	height: 100%;
+	height:100%;
 }
 
 .content-area {
@@ -27,8 +30,10 @@ ul {
 }
 
 .well {
-	color: chocolate;
-	opacity:0.6;
+    color: lavenderblush;
+	
+    font-size: larger;
+    background: rgba(245,245,245,0.5);
 }
 
 .well:hover {
@@ -36,13 +41,20 @@ ul {
 	opacity:0.9;
 }
 
-.hideComment {
-	transition: all linear 0.5s;
+.animateOnHover:hover {
+animation-iteration-count:2;
+-webkit-animation-name: animateHover;
+-webkit-animation-duration:6s;	
+} 
+
+@keyframes animateHover {
+	
+	
+	33% {padding-left:150px; }
+	75% {padding-left:-100px;}
+	
 }
 
-.hideComment.ng-hide {
-	opacity: 0;
-}
 
 .comment {
 	float: left;
@@ -70,19 +82,20 @@ ul {
 }
 
 .mainPage {
-	color:white;
+	color:lavenderblush;
 }
 
 .viewComment textarea {
-	width: 100%;
+	width: 80%;
 }
+
 
 .glyphicon {
 	
 	padding-top:5px;
 }
 .content {
-  overflow: auto;
+  
   position: relative;
 }
 
@@ -98,8 +111,9 @@ body {
     background-attachment: fixed;;
   background-position:center;
   background-size: cover;
-  width: 1200px;
-  height: 800px;
+  
+  width: 80%;
+
 
 /*   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
@@ -140,17 +154,19 @@ body::-webkit-scrollbar-thumb
   right: 0;
   z-index: 9999;
   color:white;
-  opacity:0.8
+  opacity:0.8;
+  font-size:larger;
 }
 .loginPage a {
 	color: white;
 }
 
+
 .createAccountForm {
 	background-color:red;
 	height:100%;
 	text-align:right;
-	opacity:0.8;
+	opacity:0.9;
 }
 .createAccountForm  form{
 	display:inline-table;
@@ -167,6 +183,84 @@ body::-webkit-scrollbar-thumb
   -ms-filter: blur(0.8px);
   filter: blur(0.8px);
 }
+.sidenav:hover
+{
+    
+
+    -webkit-animation: fadeInFromNone 0.5s ease-out;
+    -moz-animation: fadeInFromNone 0.5s ease-out;
+    -o-animation: fadeInFromNone 0.5s ease-out;
+    animation: fadeInFromNone 0.5s ease-out;
+}
+
+@-webkit-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
 /* Set black background color, white text and some padding */
 footer {
 	background-color: #555;
@@ -183,4 +277,123 @@ footer {
 	.row.content {
 		height: auto;
 	}
+}
+
+.commentVisible {
+	opacity: 0;
+		display:none;
+}
+
+
+/* when hiding the thing */
+.ng-hide-add{ 
+  -webkit-animation:0.5s lightSpeedOut ease; 
+  animation:0.5s lightSpeedOut ease; 
+}
+
+/* when showing the thing */
+.ng-hide-remove      { 
+
+  -webkit-animation:0.5s flipInX ease; 
+  animation:0.5s flipInX ease; 
+}
+
+/* ANIMATIONS (FROM ANIMATE.CSS) */
+
+/* flip in */
+@-webkit-keyframes flipInX {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}
+
+@keyframes flipInX {
+  0% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -ms-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -ms-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    -ms-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    -ms-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    -webkit-transform: perspective(400px);
+    -ms-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}
+
+/* light speed out */
+@-webkit-keyframes lightSpeedOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
+    transform: translate3d(100%, 0, 0) skewX(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes lightSpeedOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
+    -ms-transform: translate3d(100%, 0, 0) skewX(30deg);
+    transform: translate3d(100%, 0, 0) skewX(30deg);
+    opacity: 0;
+  }
 }

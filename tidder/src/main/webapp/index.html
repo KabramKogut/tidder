@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.css">
 <script
@@ -14,16 +17,17 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-block-ui/0.2.2/angular-block-ui.min.js"></script>
+	  
 <link href="css/bootstrapTemplate.css" rel="stylesheet">
 <script src="js/MainPage.js"></script>
 <script src="scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
 </head>
-<body ng-app="Tidder">
+<body ng-app="Tidder" ng-cloak>
 
 	<div class="container-fluid" id="style-9">
 		<div class="row content">
@@ -51,12 +55,11 @@
 				</div>
 			</div>
 
-			<!--    <div class="col-sm-9" ng-controller="MainPageController"> -->
-			<div class="col-sm-9 mainPage" ng-controller="PaginationMyController"
+			<!--    <div class="col-sm-10" ng-controller="MainPageController"> -->
+			<div class="col-sm-10 mainPage" ng-controller="PaginationMyController"
 				ng-init="init()">
 				<h4>
 					<small>RECENT POSTS</small>
-
 				</h4>
 
 				<div ng-model="mydata"></div>
@@ -83,14 +86,18 @@
 							class="label label-primary">Ipsum</span>
 					</h5>
 					<br>
-					<p class="well">{{ x.text }}</p>
+					<div class="well animateOnHover">
+					<p>{{ x.text }}
+					</p>
+					</div>
 					<div class="col-xs-11">
-						<div class="button">
-							<!-- <span class="btn" ng-click="x.data = getCommentById(x.id)">View Comments</span> -->
-							<span class="btn" ng-click="commentVisible = !commentVisible">View
+						<div class="button" >
+							
+							<span  class="btn"  ng-click="commentVisible = !commentVisible; commentVisibleOnInit = true;">View
 								Comments</span>
-							<div ng-show="commentVisible"
+							<div  ng-if="commentVisibleOnInit" class="showComments" ng-class="{active: commentVisible}" ng-show="commentVisible"
 								ng-repeat="comment in commentByPostId[x.id].comments">
+					
 								<ul>
 									<li >
 										<h4>@{{comment.user.name}}:</h4>
@@ -101,11 +108,11 @@
 										</p>
 										</div>
 										
-										
 									</li>
 								</ul>
 							</div>
-							<div ng-show="commentVisible">
+							
+							<div ng-show="commentVisible" >
 								<br>
 								<h4>Leave a Comment:</h4>
 								<form role="form" ng-submit="sendComment(x.id, comment.text)">
@@ -119,9 +126,7 @@
 								</form>
 								<br>
 							</div>
-							<div ng-show="commentAdded">
-								<p>CommentAdded</p>
-							</div>
+							
 						</div>
 					</div>
 					<div class="col-xs-1"></div>
@@ -135,9 +140,9 @@
 					<span class="badge">2</span> Comments:
 				</p>
 				<br>
-				<div class="row">
-					<div class="col-sm-2 text-center">
-						<!-- <img src="bandmember.jpg" class="img-circle" height="65" width="65" alt="Avatar">-->
+			<!-- 	<div class="row"> -->
+		<!-- 			<div class="col-sm-2 text-center">
+						<img src="bandmember.jpg" class="img-circle" height="65" width="65" alt="Avatar">
 					</div>
 					<div class="col-sm-10">
 						<h4>
@@ -147,9 +152,9 @@
 							dolor sit amet, consectetur adipiscing elit, sed do eiusmod
 							tempor incididunt ut labore et dolore magna aliqua.</p>
 						<br>
-					</div>
-					<div class="col-sm-2 text-center">
-						<!-- <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">-->
+					</div> -->
+<!-- 					<div class="col-sm-2 text-center">
+						<img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">
 					</div>
 					<div class="col-sm-10">
 						<h4>
@@ -177,10 +182,10 @@
 								<br>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
-			<div class="col-sm-1"></div>
+			
 		</div>
 	</div>
 

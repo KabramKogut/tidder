@@ -1,14 +1,14 @@
 (function() {
 	'use strict';
 	var data;
-	var myApp = angular.module('Tidder', [ 'ui.bootstrap', 'ngAnimate','blockUI' ]);
+	var myApp = angular.module('Tidder', [ 'ui.bootstrap', 'ngAnimate','blockUI','ngAnimate']);
 
 	myApp.controller(
 					'PaginationMyController',
 					function($scope, $http, $q, blockUI) {
 						$http.defaults.headers.post["Content-Type"] = "application/json";
 						var vm = this;
-
+					
 						var config = {
 							params : data,
 							headers : {
@@ -16,6 +16,7 @@
 							}
 						};
 						$scope.init = function() {
+							$scope.commentVisibleOnInit = null;
 							$scope.commentVisible = false;
 							$scope.commentAdded = false;
 							$scope.commentByPostId = {};
@@ -29,6 +30,7 @@
 							$scope.getPostsAmount();
 							$scope.visibleComment = false;
 							getPostsPerPage(2);
+							
 						};
 						$scope.$watch("currentPage", function() {
 							setCurrentPage($scope.currentPage);
@@ -164,6 +166,7 @@
 													
 												}
 												$scope.commentByPostId[postId] = result.data;
+												
 												return result.data;
 
 											}, function(res) {
@@ -171,7 +174,19 @@
 											});
 							return resultset;
 						}
+						
+						
 
 					});
-
+	
+	/*jQuery start*/
+/*	$('btn').click(function() {
+		$this = $(this);
+		if($this.css("transform") == "none") {
+			$this.css("transform", "rotate(45deg)");
+		} else {
+			$this.css("transform", "");
+		}
+	})*/
+	
 }());
