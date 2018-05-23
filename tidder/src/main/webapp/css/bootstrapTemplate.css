@@ -1,7 +1,16 @@
 /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
 ul {
-	list-style-image: url('http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png');
+	 /* list-style-image: url('http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png'); */ */
+   list-style-position: none;
+   list-style:none;
 }
+
+ul li div div img {
+	padding-top:40px;
+	padding-right:70px;
+	
+}
+
 .container-fluid {
 	width:100%;
 }
@@ -185,12 +194,11 @@ body::-webkit-scrollbar-thumb
 }
 .sidenav:hover
 {
-    
-
     -webkit-animation: fadeInFromNone 0.5s ease-out;
     -moz-animation: fadeInFromNone 0.5s ease-out;
     -o-animation: fadeInFromNone 0.5s ease-out;
     animation: fadeInFromNone 0.5s ease-out;
+      animation-fill-mode: forwards;  
 }
 
 @-webkit-keyframes fadeInFromNone {
