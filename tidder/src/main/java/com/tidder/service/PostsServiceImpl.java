@@ -101,7 +101,7 @@ public class PostsServiceImpl implements PostsService {
 				user.setEmail(commentEntity.getUser().getEmail());
 				
 				Comment comment = new Comment();
-				comment.setId(commentEntity.getUser().getId());
+				comment.setId(commentEntity.getId());
 				comment.setText(commentEntity.getText());
 				comment.setDate(commentEntity.getDate());
 				comment.setLikes(commentEntity.getTotalLikes());
