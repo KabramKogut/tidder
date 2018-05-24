@@ -26,7 +26,6 @@
 							$scope.dataPerPage = [];
 							$scope.ItemsOnPageAmount = 9;
 							$scope.currentPage = 1;
-							$scope.allItemsAmount = 300;
 							$scope.getPostsAmount();
 							$scope.visibleComment = false;
 							$scope.getPostsPerPage(2);
@@ -36,8 +35,13 @@
 							
 						};
 						$scope.$watch("currentPage", function() {
-							setCurrentPage($scope.currentPage);
+							$scope.setCurrentPage($scope.currentPage);
 						  });
+						
+						$scope.changePostsPerPageAmount = function(total) {
+							$scope.ItemsOnPageAmount = total
+							$scope.setCurrentPage($scope.currentPage)
+						}
 						
 						$scope.addPost = function(_topic, _text) {
 							blockUI.start();
@@ -81,14 +85,12 @@
 										} else {$scope.changeLikesByValue($scope.dataPerPage, postId, false);
 										}
 										blockUI.stop();
-										
 									}, function(response) {
-										
 										alert(response);
 							});
 						};
 						
-						$scope.likeComment = function(commentId) {
+						$scope.likeComment = function(commentId,postId) {
 							blockUI.start();
 							$http({
 								method : "post",
@@ -97,9 +99,9 @@
 							}).then(
 									function(response) {				
 										if (response.data.liked) {
-											$scope.changeLikesByValue($scope.commentByPostId, commentId, true);
+											$scope.changeLikesByValue($scope.commentByPostId[postId].comments, commentId, true);
 										} else {
-											$scope.changeLikesByValue($scope.commentByPostId, commentId, false);
+											$scope.changeLikesByValue($scope.commentByPostId[postId].comments, commentId, false);
 										}
 										blockUI.stop();
 										
@@ -174,7 +176,7 @@
 				
 
 						$scope.getPostsPerPage = function(page) {					
-							$http.get('http://localhost:8080/tidder/webapi/post/page/'+ page, config)
+							$http.get('http://localhost:8080/tidder/webapi/post/page/'+ page+ "?size=" + $scope.ItemsOnPageAmount, config)
 									.then( function(data) {
 												if( data != null || data !== "undefined") {
 													
@@ -212,7 +214,7 @@
 											});
 						}
 						
-						function setCurrentPage(page) {
+						$scope.setCurrentPage = function(page) {
 							  blockUI.start();  
 							$scope.getPostsPerPage(page);
 						}

@@ -55,6 +55,13 @@
 						<li><a href="#section3">Photos</a></li>
 						<li><p>{{dataPerPage}}</p></li>
 					</ul> -->
+					<form ng-submit="changePostsPerPageAmount(ItemsOnPageAmount)">
+						<span>Change posts per page</span>
+						<input ng-model="ItemsOnPageAmount" type="text" />
+						<input type="submit" />
+					</form>
+					
+					
 					<br> <a href="<c:url value="/logout" />">Logout</a>
 				</div>
 				<div class="sidenav">
@@ -128,7 +135,7 @@
 											<div class="col-sm-1">
 												<img src="http://dl1.cbsistatic.com/i/r/2017/07/26/e5b5301d-c110-4fdc-9434-26e6414e3a6f/thumbnail/64x64/147e8b3da070d61c0cf7b7534bc2d676/imgingest-3529522317414257963.png">
 												<button class="btn"
-												ng-click="likeComment(comment.id);">
+												ng-click="likeComment(comment.id, x.id);">
 												<span class="glyphicon glyphicon-chevron-up"></span>
 												</button>
 												<kbd>{{comment.likes}}</kbd>
@@ -186,7 +193,7 @@
 	</div>
 
 	<footer class="container-fluid">
-		<p>@Kabram & @Kogut 2018</p>
+		<p>@Kriof & @LosKogutos 2018</p>
 	</footer>
 
 </body>
