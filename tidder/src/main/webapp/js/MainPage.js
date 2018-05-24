@@ -29,45 +29,43 @@
 							$scope.allItemsAmount = 300;
 							$scope.getPostsAmount();
 							$scope.visibleComment = false;
-							getPostsPerPage(2);
+							$scope.getPostsPerPage(2);
+							$scope.post = {};
+							$scope.post.hideWindow = true;
+							window.onscroll = function() {scrollFunction()};
 							
 						};
 						$scope.$watch("currentPage", function() {
 							setCurrentPage($scope.currentPage);
 						  });
-
-						function setCurrentPage(page) {
-							  blockUI.start();  
-							getPostsPerPage(page);
+						
+						$scope.addPost = function(_topic, _text) {
+							blockUI.start();
+							$http({
+								method : "post",
+								url : "http://localhost:8080/tidder/webapi/post/new",
+								data : {topic : _topic, text : _text}
+							}).then(
+									function(response) {
+										blockUI.stop();
+										$scope.post.postAdded = true;
+										$scope.post.hideWindow = true;
+									}, function(response) {
+										alert('failure' + response);
+							});
+						}
+						
+						$scope.checkIfPostAdded = function() {
+							if( $scope.post.postAdded) {
+								$scope.post.hideWindow = true;
+								return true;
+							} else {
+								$scope.post.hideWindow = false;
+								false;
+							}
 						}
 
-						function getPostsPerPage(page) {
-							var config = {
-								params : data,
-								headers : {
-									'Accept' : 'application/json'
-								}
-							};
-							
-							$http.get('http://localhost:8080/tidder/webapi/post/page/'+ page, config)
-									.then( function(data) {
-												$scope.dataPerPageTemp = data.data;
-												angular.forEach($scope.dataPerPageTemp,
-														function(obj) {
-													if(obj.id.length !==0) {
-													$scope.dataPerPage.push(obj);
-													console.log(obj);
-													}
-												});
-												angular.forEach($scope.dataPerPage, function(obj) {
-													obj.commentData = $scope.getCommentById(obj.id)
-												});
-												console.log($scope.dataPerPage);
-												 blockUI.stop();
-											}, function(res) {
-												alert('failure' + res);
-											});
-						}
+						
 
 						$scope.likePost = function(postId) {
 							blockUI.start();
@@ -75,44 +73,58 @@
 								method : "post",
 								url : "http://localhost:8080/tidder/webapi/post/like/post?id=" + postId ,
 								data : data
-							})
-							.then(
-									function(response) {
+							}).then(
+									function(response) {				
+										if (response.data.liked) {
+											$scope.changeLikesByValue($scope.dataPerPage, postId, true);
+											
+										} else {$scope.changeLikesByValue($scope.dataPerPage, postId, false);
+										}
 										blockUI.stop();
 										
 									}, function(response) {
-										alert('failure' + response);
-									})
-						}
-						function getAllPosts() {
-							var config = {
-								params : data,
-								headers : {
-									'Accept' : 'application/json'
+										
+										alert(response);
+							});
+						};
+						
+						$scope.likeComment = function(commentId) {
+							blockUI.start();
+							$http({
+								method : "post",
+								url : "http://localhost:8080/tidder/webapi/post/like/comment?id="+ commentId ,
+								data : data
+							}).then(
+									function(response) {				
+										if (response.data.liked) {
+											$scope.changeLikesByValue($scope.commentByPostId, commentId, true);
+										} else {
+											$scope.changeLikesByValue($scope.commentByPostId, commentId, false);
+										}
+										blockUI.stop();
+										
+									}, function(response) {
+										console.log(response);
+										alert(response);
+							});
+						};
+						
+						$scope.changeLikesByValue = function(item, key, up) {
+							for (var i in item) {
+								var keys = Object.keys(item[i]);
+								
+								if(item[i].id == key) {
+									if(up) {
+										item[i].likes ++;	
+									} else {
+										item[i].likes --;
+									}
+									
 								}
-							};
-
-							$http
-									.get('http://localhost:8080/tidder/webapi/post/all',
-											config)
-									.then(
-											function(data) {
-												$scope.mydata = data.data;
-												angular
-														.forEach(
-																$scope.mydata,
-																function(obj) {
-																	obj.commentsData = $scope
-																			.getCommentById(obj.id);
-																});
-
-											}, function(res) {
-												alert('failure' + res);
-											});
-
+							}
 						}
-						;
-						/* $scope.test = $scope.getCommentById(12); */
+						
+			
 
 						$scope.getPostsAmount = function() {
 							$http({		method : "GET",
@@ -123,19 +135,16 @@
 							}, function(response) {
 									alert('failure ' + response);
 							});
-						}
+						};
 
 						$scope.sendComment = function(postId, text) {
 							var data = JSON.stringify({
 								"text" : text
 							})
-							$http({
-										method : "post",
-										url : "http://localhost:8080/tidder/webapi/post/"
-												+ postId + "/comment",
-										data : data
-									})
-									.then(
+							$http({	method : "post",
+									url : "http://localhost:8080/tidder/webapi/post/" + postId + "/comment",
+									data : data
+									}).then(
 											function(response) {
 												console
 														.log($scope.comment.text);
@@ -146,47 +155,85 @@
 														.log($scope.comment.text);
 											}, function(response) {
 
-											})
-						}
-
+											});
+						};
+						
 						$scope.getCommentById = function(postId) {
-
-							var config = {
-								params : data,
-								headers : {
-									'Accept' : 'application/json'
-								}
-							};
 							var resultset = $http.get(
 											'http://localhost:8080/tidder/webapi/post/'
 													+ postId).then(
 											function(result) {
-												if ($scope.dataPerPage[postId] == null
-														|| $scope.mydata[postId] === 'undefined') {
-													
-												}
 												$scope.commentByPostId[postId] = result.data;
-												
 												return result.data;
-
 											}, function(res) {
 												alert('failure' + res);
 											});
 							return resultset;
+						};
+						
+				
+
+						$scope.getPostsPerPage = function(page) {					
+							$http.get('http://localhost:8080/tidder/webapi/post/page/'+ page, config)
+									.then( function(data) {
+												if( data != null || data !== "undefined") {
+													
+													$scope.dataPerPage = [];
+												}
+												$scope.dataPerPageTemp = data.data;
+												angular.forEach($scope.dataPerPageTemp,
+														function(obj) {
+															if(obj.id.length !==0) {
+																$scope.dataPerPage.push(obj);
+															}
+														}
+												);
+												angular.forEach($scope.dataPerPage, function(obj) {
+													obj.commentData = $scope.getCommentById(obj.id)
+												});
+												 blockUI.stop();
+											}, function(res) {
+												alert('failure' + res);
+											});
 						}
 						
+						$scope.getAllPosts = function() {
+							$http.get('http://localhost:8080/tidder/webapi/post/all',
+											config).then(function(data) {
+												$scope.mydata = data.data;
+												angular.forEach(
+																$scope.mydata,
+																function(obj) {
+																	obj.commentsData = $scope
+																			.getCommentById(obj.id);
+																});
+											}, function(res) {
+												alert('failure' + res);
+											});
+						}
 						
-
+						function setCurrentPage(page) {
+							  blockUI.start();  
+							$scope.getPostsPerPage(page);
+						}
+						
+						function scrollFunction () {
+							if ( document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+								document.getElementById("navbar").style.top = "0"
+							} else {
+								document.getElementById("navbar").style.top = "-120px";
+							}
+						}
+						
+						$("span.addPostByUser").click(function() {
+						    $('html, body').animate({
+						        scrollTop:0
+						    }, 2000);
+						});
+						
 					});
 	
-	/*jQuery start*/
-/*	$('btn').click(function() {
-		$this = $(this);
-		if($this.css("transform") == "none") {
-			$this.css("transform", "rotate(45deg)");
-		} else {
-			$this.css("transform", "");
-		}
-	})*/
+			
+	
 	
 }());

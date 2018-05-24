@@ -20,7 +20,9 @@ public class LoginController {
 	LoginService loginService;
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String getIndex() {
+	public String getIndex(ModelMap model) {
+		UserEntity user = loginService.getAuthenticatedUser();
+		model.addAttribute("user", user);
 		return "index";
 	}
 	

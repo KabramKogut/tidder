@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tidder.model.AuthoritiesEntity;
 import com.tidder.model.UserEntity;
@@ -48,6 +50,11 @@ public class LoginServiceImpl implements LoginService {
 			throw new Exception("Unable to save user");
 		}
 		
+	}
+	
+	@Transactional
+	public UserEntity getAuthenticatedUser() {		
+		return loginRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());		
 	}
 
 }
