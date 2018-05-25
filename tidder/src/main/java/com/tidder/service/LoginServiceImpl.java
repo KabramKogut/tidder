@@ -1,7 +1,9 @@
 package com.tidder.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
 		AuthoritiesEntity auth = new AuthoritiesEntity();
 		auth.setAuthority(role);
 		auth.setUser(user);
-		List<AuthoritiesEntity> authList = new ArrayList<AuthoritiesEntity>();
+		Set<AuthoritiesEntity> authList = new HashSet<AuthoritiesEntity>();
 		authList.add(auth);
 		user.setAuthorities(authList);
 		user.setEnabled(true);

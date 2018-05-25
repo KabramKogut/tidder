@@ -2,6 +2,7 @@ package com.tidder.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -44,8 +45,8 @@ public class UserEntity implements Serializable {
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<LikePostEntity> postLikes;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
-	private List<AuthoritiesEntity> authorities;
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+	private Set<AuthoritiesEntity> authorities;
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
 	private List<PostEntity> posts;
@@ -65,10 +66,10 @@ public class UserEntity implements Serializable {
 	public void setPostLikes(List<LikePostEntity> postLikes) {
 		this.postLikes = postLikes;
 	}
-	public List<AuthoritiesEntity> getAuthorities() {
+	public Set<AuthoritiesEntity> getAuthorities() {
 		return authorities;
 	}
-	public void setAuthorities(List<AuthoritiesEntity> authorities) {
+	public void setAuthorities(Set<AuthoritiesEntity> authorities) {
 		this.authorities = authorities;
 	}
 	public List<PostEntity> getPosts() {

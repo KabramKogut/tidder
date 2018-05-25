@@ -16,8 +16,11 @@
 	<http pattern="/scripts/**" security="none"/>
 	
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/**" access="permitAll"/>
-		<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/> -->
+		<intercept-url pattern="/login.html" access="permitAll"/>
+		<intercept-url pattern="/createAccount.html" access="permitAll"/>
+		<intercept-url pattern="/loginFailed.html" access="permitAll"/>
+		<intercept-url pattern="/webapi/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
 		<form-login login-page="/login.html" 
 			username-parameter="email"
 			password-parameter="password" 
