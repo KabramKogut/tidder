@@ -36,8 +36,8 @@ public class PostsServiceImpl implements PostsService {
 	}
 	
 	@Transactional
-	public List<Post> getAllPosts() { 		
-		return entityToPost(postsRepository.findAll());
+	public List<Post> getAllPosts() { 	
+		return entityToPost(postsRepository.findAll() );
 	}
 	
 	@Transactional

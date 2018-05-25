@@ -1,6 +1,7 @@
 package com.tidder.api.dto;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,17 +10,25 @@ import com.tidder.model.UserEntity;
 
 public class CustomUserPrincipal implements UserDetails {
 	private static final long serialVersionUID = -3953720140097926338L;
+	
 	private UserEntity user;
+	Set<GrantedAuthority> authorities = null;
 
-	public CustomUserPrincipal(UserEntity user) {
+
+
+	public CustomUserPrincipal(UserEntity user, Set<GrantedAuthority> auth) {
+		this.authorities=auth;
 		this.user=user;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return (Collection<? extends GrantedAuthority>) user.getAuthorities();
+		return authorities;
+	}
+	
+	public void setAuthorities(Set<GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override
